@@ -1,0 +1,30 @@
+extends layout
+
+block content
+  h1 My todos
+  p Input name
+  input(
+    id='input-name'
+    )
+  p Input task
+  input(
+    id='input-task'
+    )
+  button(
+    id='submit-data'
+  ) Submit data
+  p(id='info')
+  h2 Search user
+  input(
+    id='search-name'
+  )
+  button(
+    id='search'
+  ) Search
+  h3 Username  
+  p(id='name')
+  button(
+    id='delete-user'
+  ) Delete user
+  h3 Todos
+  ul(id='todos')
