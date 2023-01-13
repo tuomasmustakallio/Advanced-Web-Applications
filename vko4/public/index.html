@@ -15,10 +15,14 @@
     <nav>
       <div class="nav-wrapper">
         <a href="#">Recipes</a>
+        <div>
+          <input type="search" placeholder="Search" id="searchbar" onkeydown="search(this)"/>
+        </div>
       </div>
     </nav>
     <div class="container">
       <div class="col">
+      <h4>Name</h4>
       <input type="text" id="name-text" />
       <h4>Ingredients</h4>
       <textarea id="ingredients-text"></textarea>
@@ -27,6 +31,7 @@
       <textarea id="instructions-text"></textarea>
       <button id="add-instruction" type="button" class="btn">Add instruction</button>
       <input type="file" id="image-input" multiple>Open Camera</input>
+        <legend>Categories <ul id="category-list"></ul></legend>
       <button id="submit" type="submit" class="btn">Submit</button>
     </div>
     <div class="col">
