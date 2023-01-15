@@ -52,7 +52,7 @@ app.get("/vehicle/search/:model", (req: Request, res: Response) => {
   const model: string = req.params.model;
   const foundVehicle = vehicles.find(vehicle => vehicle.model === model);
   if (foundVehicle) {
-      res.send({ model: foundVehicle.model, color: foundVehicle.color, year: foundVehicle.year, power: foundVehicle.power });
+      res.send(foundVehicle);
   } else {
       res.status(404).send("Vehicle not found");
   }
