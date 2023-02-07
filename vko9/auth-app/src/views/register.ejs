@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Registration</title>
+    <link rel="stylesheet" href="/stylesheets/style.css" />
+  </head>
+  <body>
+    <h1>Registration page</h1>
+    <form id="login-form" action="api/user/register" method="POST">
+      <div>
+        <label for="email">Email</label>
+        <input type="email" name="email" id="email" required/>
+      </div>
+      <div>
+        <label for="password">Password</label>
+        <input type="password" name="password" id="password" required/>
+      </div>
+      <div>
+        <input type="submit" value="Register"/>
+      </div>
+  </body>
+</html>

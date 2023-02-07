@@ -4,8 +4,11 @@ const router = express.Router();
 const logger = getLogger("USER_ROUTE");
 import { body, validationResult } from "express-validator";
 import Users, { IUser } from "../models/Users";
-import bcrypt from "bcryptjs";
+const bcrypt = require("bcryptjs");
 import jwt from "jsonwebtoken";
+import multer from "multer";
+const storage = multer.memoryStorage();
+const upload = multer({ storage });
 
 router.post(
   "/register",
@@ -30,8 +33,8 @@ router.post(
       if (user) {
         return res.status(403).json({ email: "Email already in use." });
       } else {
-        bcrypt.genSalt(10, (err, salt) => {
-          bcrypt.hash(req.body.password, salt, (err, hash) => {
+        bcrypt.genSalt(10, (err: any, salt: any) => {
+          bcrypt.hash(req.body.password, salt, (err: any, hash: any) => {
             if (err) throw err;
             Users.create(
               {
@@ -40,7 +43,7 @@ router.post(
               },
               (err, ok) => {
                 if (err) throw err;
-                return res.send("ok");
+                return res.redirect("/login.html");
               }
             );
           });
@@ -50,17 +53,16 @@ router.post(
   }
 );
 
-router.post(
-  "/login",
-  body("email").trim().escape(),
-  body("password").escape(),
-  (req, res, next) => {
-    Users.findOne({ email: req.body.email }, (err: Error, user: IUser) => {
-      if (err) throw err;
-      if (!user) {
-        return res.status(403).json({ message: "Login failed :(" });
-      } else {
-        bcrypt.compare(req.body.password, user.password, (err, isMatch) => {
+router.post("/login", upload.none(), (req, res, next) => {
+  Users.findOne({ email: req.body.email }, (err: Error, user: IUser) => {
+    if (err) throw err;
+    if (!user) {
+      return res.status(403).json({ message: "Login failed :(" });
+    } else {
+      bcrypt.compare(
+        req.body.password,
+        user.password,
+        (err: any, isMatch: any) => {
           if (err) throw err;
           if (isMatch) {
             const jwtPayload = {
@@ -77,11 +79,13 @@ router.post(
                 res.json({ success: true, token });
               }
             );
+          } else {
+            return res.status(403).json({ message: "password did not match" });
           }
-        });
-      }
-    });
-  }
-);
+        }
+      );
+    }
+  });
+});
 
 export default router;

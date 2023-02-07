@@ -42,7 +42,6 @@ class App {
   private routerSetup() {
     this.app.use("/", indexRouter);
     this.app.use("/api/user", userRouter);
-    this.app.use("/api/user", userRouter);
     this.app.use("/api/private", privateRouter);
     this.app.use("/api/todos", todosRouter);
   }
